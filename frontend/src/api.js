@@ -1,12 +1,16 @@
-import axios from "axios";
+export const API_URL = "http://localhost:4000";
 
-const API = "http://localhost:4000";
+export async function getHistory() {
+  const res = await fetch(`${API_URL}/history`);
+  return res.json();
+}
 
-export const calculate = (data) =>
-  axios.post(`${API}/calculate`, data);
+export async function saveCalculation(expression, result) {
+  const res = await fetch(`${API_URL}/history`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ expression, result }),
+  });
 
-export const saveCalculation = (data) =>
-  axios.post(`${API}/save`, data);
-
-export const getHistory = () =>
-  axios.get(`${API}/history`);
+  return res.json();
+}
